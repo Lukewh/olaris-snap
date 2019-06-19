@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ $1 = "stop" ]; then
+  for pid in $(pgrep -f "olaris-linux-amd64"); do
+    kill -9 "${pid}" || true
+  done
+else
+    exec "$SNAP/build/olaris-linux-amd64"
+fi
+
+exit 0

@@ -1,0 +1,30 @@
+name: olaris
+version: 0.1.2
+summary: An open-source, community driven, media manager and transcoding server.
+description: |
+  Olaris is an open-source, community driven, media manager and transcoding server.
+
+base: core18
+grade: stable
+confinement: strict
+
+parts:
+  olaris:
+    plugin: dump
+    source: https://gitlab.com/olaris/olaris-server/-/jobs/220692821/artifacts/download
+    source-type: zip
+
+  olarisd:
+    plugin: dump
+    source: ./bin
+    organize:
+      'olarisd': usr/bin/
+
+apps:
+  olaris:
+    command: build/olaris-linux-amd64
+
+  olarisd:
+    command: usr/bin/olarisd start
+    stop-command: usr/bin/olarisd stop
+    daemon: simple
