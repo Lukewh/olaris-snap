@@ -13,18 +13,39 @@ parts:
     plugin: dump
     source: https://gitlab.com/olaris/olaris-server/-/jobs/220692821/artifacts/download
     source-type: zip
+    organize:
+      'build/olaris-linux-amd64': usr/bin/
 
   olarisd:
     plugin: dump
     source: ./bin
     organize:
       'olarisd': usr/bin/
+      'olaris': usr/bin/
+
+plugs:
+  allow-config-access:
+    interface: personal-files
+    read:
+      - $HOME/.config/olaris
+    write:
+      - $HOME/.config/olaris
 
 apps:
   olaris:
-    command: build/olaris-linux-amd64
+    command: usr/bin/olaris
+    plugs:
+      - allow-config-access
+      - home
+      - network
+      - network-bind
 
-  olarisd:
-    command: usr/bin/olarisd start
-    stop-command: usr/bin/olarisd stop
-    daemon: simple
+  # olarisd:
+  #   command: usr/bin/olarisd start
+  #   # stop-command: usr/bin/olarisd stop
+  #   # daemon: simple
+  #   plugs:
+  #     - home
+  #     - allow-config-access
+  #     - network
+  #     - network-bind

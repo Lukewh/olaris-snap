@@ -1,0 +1,7 @@
+#!/bin/bash
+
+export HOME=$SNAP_USER_COMMON
+
+mkdir -p $HOME/media/Series
+mkdir -p $HOME/media/Movies
+$SNAP/usr/bin/olaris-linux-amd64
