@@ -1,7 +1,12 @@
 #!/bin/bash
 
-export HOME=$SNAP_USER_COMMON
+echo "Make dirs"
+mkdir -p $SNAP_USER_COMMON/.config
+mkdir -p "$SNAP_USER_COMMON/media/TV Shows"
+mkdir -p $SNAP_USER_COMMON/media/Movies
 
-mkdir -p $HOME/media/Series
-mkdir -p $HOME/media/Movies
-$SNAP/usr/bin/olaris-linux-amd64
+echo "Create libraries"
+$SNAP/usr/bin/olaris-linux-amd64 --config_dir=$SNAP_USER_COMMON/.config library create --name Movies --path $SNAP_USER_COMMON/media/Movies --backend_type 0 --media_type 0
+$SNAP/usr/bin/olaris-linux-amd64 --config_dir=$SNAP_USER_COMMON/.config library create --name "TV Shows" --path "$SNAP_USER_COMMON/media/TV Shows" --backend_type 0 --media_type 1
+
+$SNAP/usr/bin/olaris-linux-amd64 --config_dir=$SNAP_USER_COMMON/.config
