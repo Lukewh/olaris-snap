@@ -8,14 +8,32 @@ base: core18
 grade: stable
 confinement: strict
 
+architectures:
+  - build-on: i386
+  - build-on: amd64
+#  - build-on: arm
+#  - build-on: arm64
+
 parts:
   olaris:
     plugin: dump
     # source: https://gitlab.com/olaris/olaris-server/-/jobs/artifacts/$SNAPCRAFT_PROJECT_VERSION/download?job=compile
     source: https://gitlab.com/olaris/olaris-server/-/jobs/238497549/artifacts/download
     source-type: zip
-    organize:
-      'build/olaris-linux-amd64': usr/bin/
+#    organize:
+#      'build/olaris-linux-amd64': usr/bin/
+#      'build/olaris-linux-386': usr/bin/
+#      'build/olaris-linux-arm': usr/bin/
+#      'build/olaris-linux-arm64': usr/bin/
+    override-build: |
+      ARCHITECTURE=$(dpkg --print-architecture)
+      
+      if [ ${ARCHITECTURE} = "i386" ]; then
+        mv build/olaris-linux-386 /usr/bin/olaris
+      elif [ ${ARCHITECTURE} = "amd64" ]; then
+        mv build/olaris-linux-amd64 /usr/bin/olaris
+      fi
+      snapcraftctl build
 
   olarisd:
     plugin: dump
