@@ -5,8 +5,14 @@ mkdir -p $SNAP_USER_COMMON/.config
 mkdir -p "$SNAP_USER_COMMON/media/TV Shows"
 mkdir -p $SNAP_USER_COMMON/media/Movies
 
-echo "Create libraries"
-$SNAP/usr/bin/olaris --config_dir=$SNAP_USER_COMMON/.config library create --name Movies --path $SNAP_USER_COMMON/media/Movies --backend_type 0 --media_type 0
-$SNAP/usr/bin/olaris --config_dir=$SNAP_USER_COMMON/.config library create --name "TV Shows" --path "$SNAP_USER_COMMON/media/TV Shows" --backend_type 0 --media_type 1
+if [ $SNAP_ARCH = "amd64" ]; then
+    OLARIS=$SNAP/usr/bin/olaris-linux-amd64
+elif [ $SNAP_ARCH = "i386" ]; then
+    OLARIS=$SNAP/usr/bin/olaris-linux-386
+fi
 
-$SNAP/usr/bin/olaris --config_dir=$SNAP_USER_COMMON/.config
+echo "Create libraries"
+$OLARIS --config_dir=$SNAP_USER_COMMON/.config library create --name Movies --path $SNAP_USER_COMMON/media/Movies --backend_type 0 --media_type 0
+$OLARIS --config_dir=$SNAP_USER_COMMON/.config library create --name "TV Shows" --path "$SNAP_USER_COMMON/media/TV Shows" --backend_type 0 --media_type 1
+
+$OLARIS --config_dir=$SNAP_USER_COMMON/.config

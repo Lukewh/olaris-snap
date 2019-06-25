@@ -11,29 +11,22 @@ confinement: strict
 architectures:
   - build-on: i386
   - build-on: amd64
+## nope for now
 #  - build-on: arm
 #  - build-on: arm64
 
 parts:
   olaris:
     plugin: dump
+    ## when the next version is released, this should be used
     # source: https://gitlab.com/olaris/olaris-server/-/jobs/artifacts/$SNAPCRAFT_PROJECT_VERSION/download?job=compile
     source: https://gitlab.com/olaris/olaris-server/-/jobs/238497549/artifacts/download
     source-type: zip
-#    organize:
-#      'build/olaris-linux-amd64': usr/bin/
-#      'build/olaris-linux-386': usr/bin/
-#      'build/olaris-linux-arm': usr/bin/
-#      'build/olaris-linux-arm64': usr/bin/
-    override-build: |
-      ARCHITECTURE=$(dpkg --print-architecture)
-      
-      if [ ${ARCHITECTURE} = "i386" ]; then
-        mv build/olaris-linux-386 /usr/bin/olaris
-      elif [ ${ARCHITECTURE} = "amd64" ]; then
-        mv build/olaris-linux-amd64 /usr/bin/olaris
-      fi
-      snapcraftctl build
+    organize:
+      'build/olaris-linux-amd64': usr/bin/
+      'build/olaris-linux-386': usr/bin/
+      'build/olaris-linux-arm': usr/bin/
+      'build/olaris-linux-arm64': usr/bin/
 
   olarisd:
     plugin: dump
@@ -56,6 +49,7 @@ hooks:
       - network
       - network-bind
 
+  ## all daemons run as root with some weird apparmour stuff - so this won't work yet
   # olarisd:
   #   command: usr/bin/olarisd start
   #   # stop-command: usr/bin/olarisd stop
