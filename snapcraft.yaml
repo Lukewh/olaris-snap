@@ -42,12 +42,12 @@ apps:
       - network
       - network-bind
 
-hooks:
-  install:
-    plugs:
-      - home
-      - network
-      - network-bind
+# hooks:
+#   install:
+#     plugs:
+#       - home
+#       - network
+#       - network-bind
 
   ## all daemons run as root with some weird apparmour stuff - so this won't work yet
   # olarisd:

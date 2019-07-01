@@ -1,9 +1,23 @@
-#!/bin/bash
+#!/bin/sh -e
 
 echo "Make dirs"
-mkdir -p $SNAP_USER_COMMON/.config
-mkdir -p "$SNAP_USER_COMMON/media/TV Shows"
-mkdir -p $SNAP_USER_COMMON/media/Movies
+echo $SNAP_USER_COMMON
+if [ ! -d "$SNAP_USER_COMMON/.config" ]; then
+    NO_CONFIG=true
+    mkdir $SNAP_USER_COMMON/.config
+
+    if [ ! -d "SNAP_USER_COMMON/media" ]; then
+        mkdir $SNAP_USER_COMMON/media
+    fi
+    
+    if [ ! -d "$SNAP_USER_COMMON/media/TV Shows" ]; then
+        mkdir "$SNAP_USER_COMMON/media/TV Shows"
+    fi
+
+    if [ ! -d "$SNAP_USER_COMMON/media/Movies" ]; then
+        mkdir $SNAP_USER_COMMON/media/Movies
+    fi
+fi
 
 if [ $SNAP_ARCH = "amd64" ]; then
     OLARIS=$SNAP/usr/bin/olaris-linux-amd64
@@ -11,8 +25,10 @@ elif [ $SNAP_ARCH = "i386" ]; then
     OLARIS=$SNAP/usr/bin/olaris-linux-386
 fi
 
-echo "Create libraries"
-$OLARIS --config_dir=$SNAP_USER_COMMON/.config library create --name Movies --path $SNAP_USER_COMMON/media/Movies --backend_type 0 --media_type 0
-$OLARIS --config_dir=$SNAP_USER_COMMON/.config library create --name "TV Shows" --path "$SNAP_USER_COMMON/media/TV Shows" --backend_type 0 --media_type 1
+if [ "$NO_CONFIG" = true ]; then
+    echo "Create libraries"
+    $OLARIS --config_dir=$SNAP_USER_COMMON/.config library create --name Movies --path $SNAP_USER_COMMON/media/Movies --backend_type 0 --media_type 0
+    $OLARIS --config_dir=$SNAP_USER_COMMON/.config library create --name "TV Shows" --path "$SNAP_USER_COMMON/media/TV Shows" --backend_type 0 --media_type 1
+fi
 
 $OLARIS --config_dir=$SNAP_USER_COMMON/.config
