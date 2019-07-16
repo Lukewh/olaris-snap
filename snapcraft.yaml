@@ -1,5 +1,5 @@
 name: olaris
-version: 0.2.0-config-dir
+version: 0.2.0-config-dir-2019-07-10
 summary: An open-source, community driven, media manager and transcoding server.
 description: |
   Olaris is an open-source, community driven, media manager and transcoding server.
@@ -20,7 +20,7 @@ parts:
     plugin: dump
     ## when the next version is released, this should be used
     # source: https://gitlab.com/olaris/olaris-server/-/jobs/artifacts/$SNAPCRAFT_PROJECT_VERSION/download?job=compile
-    source: https://gitlab.com/olaris/olaris-server/-/jobs/238497549/artifacts/download
+    source: https://gitlab.com/olaris/olaris-server/-/jobs/248975586/artifacts/download
     source-type: zip
     organize:
       'build/olaris-linux-amd64': usr/bin/
