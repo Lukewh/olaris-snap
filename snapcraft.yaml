@@ -40,9 +40,9 @@ apps:
       - network
       - network-bind
   ## Just a hard nope for now
-  #olarisd:
-  #  command: usr/bin/olarisd
-  #  plugs:
-  #    - home
-  #    - network
-  #    - network-bind
+  olarisd:
+    command: usr/bin/olarisd
+    plugs:
+      - home
+      - network
+      - network-bind
