@@ -23,11 +23,15 @@ if [ $SNAP_ARCH = "amd64" ]; then
     OLARIS=$SNAP/usr/bin/olaris-linux-amd64
 elif [ $SNAP_ARCH = "i386" ]; then
     OLARIS=$SNAP/usr/bin/olaris-linux-386
+elif [ $SNAP_ARCH = "arm64" ]; then
+    OLARIS=$SNAP/usr/bin/olaris-linux-arm64
+elif [ $SNAP_ARCH = "armhf" ]; then
+    OLARIS=$SNAP/usr/bin/olaris-linux-arm
 fi
 
 if [ "$NO_CONFIG" = true ]; then
     echo "Create libraries"
-    $OLARIS --config_dir=$SNAP_USER_COMMON/.config library create --name Movies --path $SNAP_USER_COMMON/media/Movies --backend_type 0 --media_type 0
+    $OLARIS --config_dir=$SNAP_USER_COMMON/.config library create --name "Movies" --path "$SNAP_USER_COMMON/media/Movies" --backend_type 0 --media_type 0
     $OLARIS --config_dir=$SNAP_USER_COMMON/.config library create --name "TV Shows" --path "$SNAP_USER_COMMON/media/TV Shows" --backend_type 0 --media_type 1
 fi
 

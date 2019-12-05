@@ -1,5 +1,5 @@
 name: olaris
-version: 0.2.0-config-dir-2019-07-10
+version: 0.3.1
 summary: An open-source, community driven, media manager and transcoding server.
 description: |
   Olaris is an open-source, community driven, media manager and transcoding server.
@@ -11,16 +11,13 @@ confinement: strict
 architectures:
   - build-on: i386
   - build-on: amd64
-## nope for now
-#  - build-on: arm
-#  - build-on: arm64
+  - build-on: armhf
+  - build-on: arm64
 
 parts:
   olaris:
     plugin: dump
-    ## when the next version is released, this should be used
-    # source: https://gitlab.com/olaris/olaris-server/-/jobs/artifacts/$SNAPCRAFT_PROJECT_VERSION/download?job=compile
-    source: https://gitlab.com/olaris/olaris-server/-/jobs/248975586/artifacts/download
+    source: https://gitlab.com/olaris/olaris-server/-/jobs/artifacts/v$SNAPCRAFT_PROJECT_VERSION/download?job=build
     source-type: zip
     organize:
       'build/olaris-linux-amd64': usr/bin/
@@ -34,6 +31,7 @@ parts:
     organize:
       'olarisd': usr/bin/
       'olaris': usr/bin/
+
 apps:
   olaris:
     command: usr/bin/olaris
@@ -41,21 +39,10 @@ apps:
       - home
       - network
       - network-bind
-
-# hooks:
-#   install:
-#     plugs:
-#       - home
-#       - network
-#       - network-bind
-
-  ## all daemons run as root with some weird apparmour stuff - so this won't work yet
-  # olarisd:
-  #   command: usr/bin/olarisd start
-  #   # stop-command: usr/bin/olarisd stop
-  #   # daemon: simple
-  #   plugs:
-  #     - home
-  #     - allow-config-access
-  #     - network
-  #     - network-bind
+  ## Just a hard nope for now
+  #olarisd:
+  #  command: usr/bin/olarisd
+  #  plugs:
+  #    - home
+  #    - network
+  #    - network-bind
