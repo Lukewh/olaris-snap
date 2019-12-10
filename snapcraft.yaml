@@ -24,6 +24,8 @@ parts:
       'build/olaris-linux-386': usr/bin/
       'build/olaris-linux-arm': usr/bin/
       'build/olaris-linux-arm64': usr/bin/
+    stage-packages:
+      - ffmpeg
 
   olarisd:
     plugin: dump
@@ -31,6 +33,7 @@ parts:
     organize:
       'olarisd': usr/bin/
       'olaris': usr/bin/
+
 
 apps:
   olaris:
