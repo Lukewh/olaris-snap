@@ -17,7 +17,7 @@ architectures:
 parts:
   olaris:
     plugin: dump
-    source: https://gitlab.com/olaris/olaris-server/-/jobs/artifacts/v$SNAPCRAFT_PROJECT_VERSION/download?job=build
+    source: https://gitlab.com/olaris/olaris-server/-/jobs/400800161/artifacts/download
     source-type: zip
     organize:
       'build/olaris-linux-amd64': usr/bin/
