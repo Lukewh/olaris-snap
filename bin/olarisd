@@ -21,7 +21,7 @@ function start {
         echo "olarisd is already running"
         exit 0
     fi
-    
+
     if [ ! -d "$SNAP_USER_COMMON/logs" ]; then
         mkdir "$SNAP_USER_COMMON/logs"
     fi

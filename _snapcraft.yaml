@@ -1,0 +1,63 @@
+name: olaris
+version: $VERSION
+summary: An open-source, community driven, media manager and transcoding server.
+description: |
+  Olaris is an open-source, community driven, media manager and transcoding server.
+
+base: core20
+grade: stable
+confinement: strict
+
+parts:
+  olaris:
+    plugin: dump
+    source: $ARTIFACT
+    source-type: zip
+    build-snaps:
+      - go
+    build-packages:
+      - git
+      - unzip
+      - curl
+      - make
+    override-build: |
+      mv olaris-server-$VERSION/* .
+      echo "#####################"
+      echo "# Download Frontend #"
+      echo "#####################"
+      make download-olaris-react
+      echo "#####################"
+      echo "#  Download FFMpeg  #"
+      echo "#####################"
+      make download-ffmpeg
+      echo "#####################"
+      echo "#       Build       #"
+      echo "#####################"
+      make build-linux
+      ls $SNAPCRAFT_PART_BUILD/build
+    organize:
+      "$SNAPCRAFT_PART_BUILD/build/*": usr/bin/
+
+  #olarisd:
+  #  plugin: dump
+  #  source: ./bin
+  #  organize:
+  #    'olarisd': usr/bin/
+  #    'olaris': usr/bin/
+
+
+apps:
+  olaris:
+    command: usr/bin/olaris
+    plugs:
+      - home
+      - network
+      - network-bind
+  ## Just a hard nope for now
+  #olarisd:
+  #  command: usr/bin/olaris
+  #  daemon: simple
+  #  plugs:
+  #    - home
+  #    - network
+  #    - network-bind
